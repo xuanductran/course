@@ -1,0 +1,48 @@
+{% extends 'admin/base_site.html' %}
+{% block content %}
+<h1>He thong cho Dong Xuan</h1>
+{{ stats }}
+<ul>
+    {% for s in stats %}
+    <li><strong>{{s.name}}</strong> co id: {{ s.id }} ,
+        s.count }}</li>
+    {% endfor%}
+</ul>
+<div style="width:60%">
+  <canvas id="myChart" ></canvas>
+</div>
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+<script>
+
+    window.onload=function(){
+    let data=[]
+let labels=[]
+{% for i in stats %}
+data.push({{i.count}})
+labels.push('{{i.name}}')
+
+{% endfor%}
+ const ctx = document.getElementById('myChart');
+
+  new Chart(ctx, {
+    type: 'bar',
+    data: {
+      labels: labels,
+      datasets: [{
+        label: '# buoi hoc',
+        data: data,
+        borderWidth: 1,
+        backgroundColor:['red','green']
+      }]
+    },
+    options: {
+      scales: {
+        y: {
+          beginAtZero: true
+        }
+      }
+    }
+  });
+    }
+</script>
+{% endblock %}
